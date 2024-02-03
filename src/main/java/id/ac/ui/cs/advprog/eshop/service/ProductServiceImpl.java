@@ -28,4 +28,10 @@ public class ProductServiceImpl implements  ProductService{
 
         return allProduct;
     }
+
+    @Override
+    public boolean edit(Product product){
+        return productRepository.edit(product);
+
+    }
 }
