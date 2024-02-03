@@ -21,4 +21,27 @@ public class ProductRepository {
     public Iterator<Product> findAll(){
         return productData.iterator();
     }
+
+    public boolean edit(Product product){
+        int index = findIndex(product.getProductId());
+
+        if (index==-1) return false;
+        else{
+            Product existingProduct = productData.get(index);
+            existingProduct.setProductQuantity(product.getProductQuantity());
+            existingProduct.setProductName(product.getProductName());
+            return true;
+        }
+    }
+
+    public int findIndex(String productId){
+        int index=0;
+        for (Product productDatum : productData) {
+            if (productDatum.getProductId().equals(productId)) {
+                return index;
+            }
+            index += 1;
+        }
+        return -1;
+    }
 }
