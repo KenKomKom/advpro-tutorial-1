@@ -35,4 +35,20 @@ public class ProductController {
         return "productList";
     }
 
+    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+    public String editProductPage(Model model, @PathVariable("id") String productId){
+        Product product = new Product();
+        product.setProductId(productId);
+
+        model.addAttribute("product", product);
+        return "EditProduct";
+    }
+
+    @PutMapping(value="/edit/{id}")
+    public String EditProductPost(@ModelAttribute Product product, Model model, @PathVariable("id") String productId){
+        product.setProductId(productId); // Reasoning: After posted by form, id becomes null
+        service.edit(product);
+        return "redirect:../list";
+    }
+
 }
