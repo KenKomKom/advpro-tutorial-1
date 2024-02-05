@@ -43,6 +43,7 @@ public class HomePageFunctionalTest {
 
     void fillNameQuantity(ChromeDriver driver, String name, int quantity){
         driver.findElement(By.id("nameInput")).sendKeys(name);
+        driver.findElement(By.id("quantityInput")).clear();
         driver.findElement(By.id("quantityInput")).sendKeys(String.valueOf(quantity));
         driver.findElement(By.className("btn")).click();
     }
