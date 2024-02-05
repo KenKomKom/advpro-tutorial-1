@@ -35,6 +35,15 @@ public class ProductRepository {
         }
     }
 
+    public boolean delete(String productId){
+        int index = findIndex(productId);
+        if (index==-1) return false;
+        else {
+            productData.remove(index);
+            return true;
+        }
+    }
+
     public int findIndex(String productId){
         int index=0;
         for (Product productDatum : productData) {

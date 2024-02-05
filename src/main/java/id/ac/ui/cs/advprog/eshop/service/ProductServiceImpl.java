@@ -39,4 +39,8 @@ public class ProductServiceImpl implements  ProductService{
     public Product getProduct(String productId) throws InvalidKeyException {
         return productRepository.getProduct(productId);
     }
+    @Override
+    public boolean delete(String productId) {
+        return productRepository.delete(productId);
+    }
 }

@@ -10,4 +10,5 @@ public interface ProductService {
     public List<Product> findAll();
     public boolean edit(Product product);
     public Product getProduct(String productId) throws InvalidKeyException;
+    public boolean delete(String productId);
 }

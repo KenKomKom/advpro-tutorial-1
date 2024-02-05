@@ -11,32 +11,29 @@ import java.security.InvalidKeyException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/product")
 public class ProductController {
     @Autowired
     private ProductService service;
 
-    @GetMapping("/create")
+    @GetMapping("")
+    public String homePage(Model model){
+        return "homepage";
+    }
+
+    @GetMapping("/product/create")
     public String createProductPage(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
         return "createProduct";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/product/create")
     public String createProductPost(@ModelAttribute Product product, Model model){
         service.create(product);
         return "redirect:list";
     }
 
-    @GetMapping("/list")
-    public String productListPage(Model model){
-        List<Product> allProducts = service.findAll();
-        model.addAttribute("products", allProducts);
-        return "productList";
-    }
-
-    @RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/product/edit/{id}", method = RequestMethod.GET)
     public String editProductPage(Model model, @PathVariable("id") String productId){
         try{
             Product product = service.getProduct(productId);
@@ -47,11 +44,23 @@ public class ProductController {
         }
     }
 
-    @PutMapping(value="/edit/{id}")
+    @PutMapping(value="/product/edit/{id}")
     public String EditProductPost(@ModelAttribute Product product, Model model, @PathVariable("id") String productId){
         product.setProductId(productId); // Reasoning: After posted by form, id becomes null
         service.edit(product);
         return "redirect:../list";
     }
 
+    @GetMapping("/product/list")
+    public String productListPage(Model model){
+        List<Product> allProducts = service.findAll();
+        model.addAttribute("products", allProducts);
+        return "productList";
+    }
+
+    @GetMapping("/product/delete/{idToBeDelete}")
+    public String deleteProductPost(Model model, @PathVariable String idToBeDelete){
+        service.delete(idToBeDelete);
+        return "redirect:../list";
+    }
 }
