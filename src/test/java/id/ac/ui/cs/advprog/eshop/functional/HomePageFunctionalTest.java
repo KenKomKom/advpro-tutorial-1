@@ -4,7 +4,6 @@ import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
 import io.github.bonigarcia.seljup.SeleniumJupiter;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -44,6 +43,7 @@ public class HomePageFunctionalTest {
 
     void fillNameQuantity(ChromeDriver driver, String name, int quantity){
         driver.findElement(By.id("nameInput")).sendKeys(name);
+        driver.findElement(By.id("quantityInput")).clear();
         driver.findElement(By.id("quantityInput")).sendKeys(String.valueOf(quantity));
         driver.findElement(By.className("btn")).click();
     }
@@ -98,5 +98,43 @@ public class HomePageFunctionalTest {
         assertTrue(checkForFirstProductInList(driver, name, quantity));
 
         deleteAll(driver,1);
+    }
+
+    @Test
+    void createEditProduct_isCorrect(ChromeDriver driver) throws Exception{
+        String name = "lala";
+        int quantity = 1231;
+
+        String name2 = "budiPekerti";
+        int quantity2= 84021;
+
+        createProduct(driver, name, quantity);
+        assertTrue(checkForFirstProductInList(driver, name, quantity));
+
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        WebElement linkEdit = links.get(1);
+        linkEdit.click();
+
+        fillNameQuantity(driver, name2, quantity2);
+
+        assertTrue(checkForFirstProductInList(driver, name2, quantity2));
+
+        deleteAll(driver,1);
+    }
+
+    @Test
+    void createDelete_isCorrect(ChromeDriver driver) throws Exception{
+        String name = "lala";
+        int quantity = 1231;
+
+        createProduct(driver, name, quantity);
+        assertTrue(checkForFirstProductInList(driver, name, quantity));
+
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        WebElement linkDelete = links.get(2);
+        linkDelete.click();
+
+        List<WebElement> productInfo = driver.findElements(By.tagName("td"));
+        assertEquals(0,productInfo.size());
     }
 }
