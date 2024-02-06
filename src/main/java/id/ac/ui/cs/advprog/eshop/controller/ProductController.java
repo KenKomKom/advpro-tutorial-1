@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidKeyException;
 import java.util.List;
 
 @Controller
@@ -34,11 +35,13 @@ public class ProductController {
 
     @RequestMapping(value="/product/edit/{id}", method = RequestMethod.GET)
     public String editProductPage(Model model, @PathVariable("id") String productId){
-        Product product = new Product();
-        product.setProductId(productId);
-
-        model.addAttribute("product", product);
-        return "EditProduct";
+        try{
+            Product product = service.getProduct(productId);
+            model.addAttribute("product", product);
+            return "EditProduct";
+        }catch (Exception e){
+            return "redirect:../list";
+        }
     }
 
     @PutMapping(value="/product/edit/{id}")

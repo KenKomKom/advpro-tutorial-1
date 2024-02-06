@@ -5,6 +5,7 @@ import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.openmbean.InvalidKeyException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,7 +33,11 @@ public class ProductServiceImpl implements  ProductService{
     @Override
     public boolean edit(Product product){
         return productRepository.edit(product);
+    }
 
+    @Override
+    public Product getProduct(String productId) throws InvalidKeyException {
+        return productRepository.getProduct(productId);
     }
     @Override
     public boolean delete(String productId) {
