@@ -63,6 +63,7 @@ public class ProductRepositoryTest {
         Product product2 = createAndSaveProduct("Sampo Cap Usep","a0f9de45-90b1-437d-a0bf-d0821dde9096",50);
 
         Iterator<Product> productIterator = productRepository.findAll();
+
         assertTrue(productIterator.hasNext());
         Product savedProduct = productIterator.next();
         assertEquals(product1.getProductId(), savedProduct.getProductId());
