@@ -17,6 +17,6 @@ jobs:
       - uses: pmd/pmd-github-action@v1
         with:
           rulesets: 'rulesets/java/quickstart.xml'
-          target-directory: '\src'
+          target-directory: './src'
           format: 'text'
           failOnViolation: true
