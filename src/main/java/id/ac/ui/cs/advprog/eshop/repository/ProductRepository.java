@@ -26,8 +26,9 @@ public class ProductRepository {
     public boolean edit(Product product){
         int index = findIndex(product.getProductId());
 
-        if (index==-1) return false;
-        else{
+        if (index==-1) {
+            return false;
+        } else{
             Product existingProduct = productData.get(index);
             existingProduct.setProductQuantity(product.getProductQuantity());
             existingProduct.setProductName(product.getProductName());
@@ -37,8 +38,9 @@ public class ProductRepository {
 
     public boolean delete(String productId){
         int index = findIndex(productId);
-        if (index==-1) return false;
-        else {
+        if (index==-1) {
+            return false;
+        } else {
             productData.remove(index);
             return true;
         }
@@ -56,8 +58,9 @@ public class ProductRepository {
     }
     public Product getProduct(String productId) throws InvalidKeyException{
         int index=findIndex(productId);
-        if (index==-1) throw new InvalidKeyException();
-        else {
+        if (index==-1) {
+            throw new InvalidKeyException();
+        } else {
             return productData.get(index);
         }
     }
