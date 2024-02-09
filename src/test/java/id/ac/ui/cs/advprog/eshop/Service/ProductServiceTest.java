@@ -1,15 +1,15 @@
-package id.ac.ui.cs.advprog.eshop.Service;
+package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
-import id.ac.ui.cs.advprog.eshop.service.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
     @InjectMocks
@@ -61,7 +61,7 @@ public class ProductServiceTest {
     @Test
     void testEditGetProduct(){
         Product product1 = createProduct("nama","id",1);
-        Product resultCreate = service.create(product1);
+        service.create(product1);
         product1.setProductId("id"); // productRepo.create changes the id
 
         Product product2 = createProduct("nomu","id",2);
@@ -77,9 +77,11 @@ public class ProductServiceTest {
     @Test
     void testCreateDeleteProduct(){
         Product product1 = createProduct("nama","id",1);
-        Product resultCreate = service.create(product1);
+        service.create(product1);
         product1.setProductId("id"); // productRepo.create changes the id
+
         boolean hasDelete = service.delete("id");
+
         List<Product> list = service.findAll();
         assertTrue(hasDelete);
         assertEquals(0,list.size());

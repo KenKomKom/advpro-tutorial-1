@@ -1,26 +1,20 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 import id.ac.ui.cs.advprog.eshop.model.Product;
-import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.security.InvalidKeyException;
-import java.security.KeyException;
 import java.util.Iterator;
-import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductRepositoryTest {
     @InjectMocks
     ProductRepository productRepository;
-
-    @BeforeEach
-    void setUp(){}
 
     Product createAndSaveProduct(String name, String id, int quantity){
         Product product = createProduct(name,id,quantity);
@@ -78,8 +72,7 @@ public class ProductRepositoryTest {
     void testCreateAndDelete(){
         Iterator<Product> productIterator = productRepository.findAll();
 
-        Product product = createAndSaveProduct("Sampo Cap Bambang","eb558e9f-1c39-460e-8860-71af6af63bd6",100);
-
+        createAndSaveProduct("Sampo Cap Bambang","eb558e9f-1c39-460e-8860-71af6af63bd6",100);
 
         assertTrue(productIterator.hasNext());
         productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6");
@@ -136,7 +129,7 @@ public class ProductRepositoryTest {
     void testDeleteIfNotFound(){
         Iterator<Product> productIterator = productRepository.findAll();
 
-        Product product1 = createAndSaveProduct("Sampo Cap Bambang","eb558e9f-1c39-460e-8860-71af6af63bd6",100);
+        createAndSaveProduct("Sampo Cap Bambang","eb558e9f-1c39-460e-8860-71af6af63bd6",100);
 
         productRepository.delete("-");
         assertTrue(productIterator.hasNext());
@@ -155,11 +148,11 @@ public class ProductRepositoryTest {
     @Test
     void testCreateGetNotFound(){
         try{
-            Product product = productRepository.getProduct("eb558e9f-1c39-460e-8860-71af6af63bd6");
+            productRepository.getProduct("eb558e9f-1c39-460e-8860-71af6af63bd6");
         }catch (Exception e){
             // Jika ada error maka berhasil
             // Tidak bisa catch InvalidKeyException karena never thrown entah gimana
-            assertTrue(1==1);
+            System.out.println("product not found successfully");
         }
     }
 }
