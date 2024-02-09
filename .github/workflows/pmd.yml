@@ -1,0 +1,15 @@
+name : PMD
+
+on :
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-22.04
+    steps :
+      - name: PMD running
+        uses: pmd/pmd-github-action@v1
+        with:
+          rulesets: 'ruleset.xml'
