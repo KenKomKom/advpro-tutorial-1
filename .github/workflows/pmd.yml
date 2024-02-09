@@ -17,7 +17,6 @@ jobs:
       - uses: pmd/pmd-github-action@v1
         with:
           rulesets: 'rulesets/java/quickstart.xml'
-      - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: pmd-report.sarif
+          target-directory: '\src'
+          format: 'text'
+          failOnViolation: true
