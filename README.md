@@ -35,3 +35,17 @@
 
 
 3. Menurut saya kebersihan kode nya akan berkurang karena artinya terjadi pengulangan kode pada program kita. Dimana salah satu paradigma pemrograman adalah don't repeat yourself. Selain itu, kedua function tersebut artinya melakukan lebih dari 1 hal dan kemungkinan functionnya dapat disederhanakan dengan memisahkan bagian instansiasi produk ke menjadi functionnya sendiri dan test function hanya berfungsi untuk mengecek kebenaran kode, memenuhi paradigma sehingga 1 fungsi 1 tujuan.
+
+## REFLECTION2
+
+1. Masalah kualitas kode yang saya bersihkan pada tutorial ini adalah sebagai berikut :
+- Berdasarkan PMD:
+  - Menghilangkan sebagian import yang tidak diperlukan
+  - Mengimport hanya method yang diperlukan
+  - Membuat blok if else berada didalam kurung kurawal untuk konsistensi
+  - Menghilangkan access modifier public pada interface karena pada java sudah otomatis
+  - Menghilangkan deklarasi variabel yang tidak digunakan.
+  - Menghilangkan kurung yang tidak berguna agar kode bersih
+  - Penyesuaian nama fungsi berdasarkan standar Java
+  - Penyesuaian nama package agar tidak mengandung kapital
+2. Menurut saya, dengan diimplementasikannya CI/CD workflow pada aplikasi ini sudah lumayan sesuai dengan definisi dari CI/CD workflows. Setiap kali ada push ke repository github aplikasi akan selalu di test terlebih dahulu oleh unit-test dan kemudian di cek oleh PMD dan ScoreCard akan kebersihan kodenya. Dengan demikian aplikasi ini akan selalu teruji implementasinya setiap ada push ke branch. Untuk Continuous deployment. Saat contributor github merasa sudah cukup baik dan merge ke main. Maka aplikasi akan terdeploy secara otomatis oleh Koyeb dan bisa diakses via internet.

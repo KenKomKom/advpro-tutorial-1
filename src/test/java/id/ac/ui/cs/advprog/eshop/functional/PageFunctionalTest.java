@@ -1,8 +1,8 @@
 package id.ac.ui.cs.advprog.eshop.functional;
 
-import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
 import io.github.bonigarcia.seljup.SeleniumJupiter;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,12 +13,13 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ExtendWith(SeleniumJupiter.class)
-public class HomePageFunctionalTest {
+public class PageFunctionalTest {
     @LocalServerPort
     private int serverPort;
 
@@ -33,7 +34,6 @@ public class HomePageFunctionalTest {
     }
 
     void deleteAll(ChromeDriver driver, int productsMade){
-        List<WebElement> productInfo = driver.findElements(By.tagName("td"));
         for (int i=0; i<productsMade; i++){
             List<WebElement> links = driver.findElements(By.tagName("a"));
             WebElement linkDelete = links.get(2);
@@ -56,17 +56,17 @@ public class HomePageFunctionalTest {
         boolean success = true;
 
         String productList = driver.findElement(By.tagName("h2")).getText();
-        success = success && productList.equals("Product' List");
+        success = success && "Product' List".equals(productList);
         System.out.println("cek product' list: "+success);
 
         List<WebElement> productInfo = driver.findElements(By.tagName("td"));
         WebElement productName = productInfo.get(0);
-        success = success && (name.equals(productName.getText()));
+        success = success && name.equals(productName.getText());
         System.out.println(name+" "+productName.getText());
         System.out.println("cek nama: "+success);
 
         WebElement productQuantity = productInfo.get(1);
-        success = success && (String.valueOf(quantity).equals(productQuantity.getText()));
+        success = success && String.valueOf(quantity).equals(productQuantity.getText());
         System.out.println(String.valueOf(quantity)+" "+productQuantity.getText());
         System.out.println("cek kuantitas: "+success);
 
@@ -74,7 +74,7 @@ public class HomePageFunctionalTest {
     }
 
     @Test
-    void pageTitle_isCorrect(ChromeDriver driver) throws Exception{
+    void pageTitleIsCorrect(ChromeDriver driver) throws Exception{
         driver.get(baseUrl);
         String pageTitle = driver.getTitle();
 
@@ -82,7 +82,7 @@ public class HomePageFunctionalTest {
     }
 
     @Test
-    void welcomeMessage_homepage_isCorrect(ChromeDriver driver) throws Exception{
+    void welcomeMessageHomepageIsCorrect(ChromeDriver driver) throws Exception{
         driver.get(baseUrl);
         String welcomeMessage = driver.findElement(By.tagName("h3")).getText();
 
@@ -90,7 +90,7 @@ public class HomePageFunctionalTest {
     }
 
     @Test
-    void createProduct_isCorrect(ChromeDriver driver) throws Exception{
+    void createProductIsCorrect(ChromeDriver driver) throws Exception{
         String name = "lalal";
         int quantity = 1230;
 
@@ -101,7 +101,7 @@ public class HomePageFunctionalTest {
     }
 
     @Test
-    void createEditProduct_isCorrect(ChromeDriver driver) throws Exception{
+    void createEditProductIsCorrect(ChromeDriver driver) throws Exception{
         String name = "lala";
         int quantity = 1231;
 
@@ -123,7 +123,7 @@ public class HomePageFunctionalTest {
     }
 
     @Test
-    void createDelete_isCorrect(ChromeDriver driver) throws Exception{
+    void createDeleteIsCorrect(ChromeDriver driver) throws Exception{
         String name = "lala";
         int quantity = 1231;
 

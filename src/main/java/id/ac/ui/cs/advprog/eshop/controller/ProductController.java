@@ -5,7 +5,13 @@ import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -44,7 +50,7 @@ public class ProductController {
     }
 
     @PutMapping(value="/product/edit/{id}")
-    public String EditProductPost(@ModelAttribute Product product, Model model, @PathVariable("id") String productId){
+    public String editProductPost(@ModelAttribute Product product, Model model, @PathVariable("id") String productId){
         product.setProductId(productId); // Reasoning: After posted by form, id becomes null
         service.edit(product);
         return "redirect:../list";
