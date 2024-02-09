@@ -18,5 +18,6 @@ jobs:
         with:
           rulesets: 'rulesets/java/quickstart.xml'
           sourcePath: 'src/'
+          analyzeModifiedFilesOnly: 'false'
           format: 'text'
           failOnViolation: true
