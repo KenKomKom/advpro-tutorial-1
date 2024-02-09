@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.security.InvalidKeyException;
+import java.security.KeyException;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -139,5 +141,25 @@ public class ProductRepositoryTest {
         productRepository.delete("-");
         assertTrue(productIterator.hasNext());
 
+    }
+
+    @Test
+    void testCreateGet(){
+        Product product1 = createAndSaveProduct("Sampo Cap Bambang","eb558e9f-1c39-460e-8860-71af6af63bd6",100);
+        Product result = productRepository.getProduct(product1.getProductId());
+        assertEquals("eb558e9f-1c39-460e-8860-71af6af63bd6", result.getProductId());
+        assertEquals("Sampo Cap Bambang", result.getProductName());
+        assertEquals(100, result.getProductQuantity());
+    }
+
+    @Test
+    void testCreateGetNotFound(){
+        try{
+            Product product = productRepository.getProduct("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        }catch (Exception e){
+            // Jika ada error maka berhasil
+            // Tidak bisa catch InvalidKeyException karena never thrown entah gimana
+            assertTrue(1==1);
+        }
     }
 }

@@ -6,9 +6,9 @@ import javax.management.openmbean.InvalidKeyException;
 import java.util.List;
 
 public interface ProductService {
-    public Product create(Product product);
-    public List<Product> findAll();
-    public boolean edit(Product product);
-    public Product getProduct(String productId) throws InvalidKeyException;
-    public boolean delete(String productId);
+    Product create(Product product);
+    List<Product> findAll();
+    boolean edit(Product product);
+    Product getProduct(String productId) throws InvalidKeyException;
+    boolean delete(String productId);
 }
