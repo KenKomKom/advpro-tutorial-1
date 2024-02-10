@@ -33,8 +33,9 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public String createProductPost(@ModelAttribute Product product, Model model){
+    public String createProductPost(@ModelAttribute("product") Product product, Model model){
         service.create(product);
+        System.out.println(service.getProduct(product.getProductId()));
         return "redirect:list";
     }
 
@@ -59,6 +60,10 @@ public class ProductController {
     @GetMapping("/product/list")
     public String productListPage(Model model){
         List<Product> allProducts = service.findAll();
+        System.out.println(allProducts);
+        for (long i = 0; i <Long.MAX_VALUE ; i++) {
+
+        }
         model.addAttribute("products", allProducts);
         return "productlist";
     }

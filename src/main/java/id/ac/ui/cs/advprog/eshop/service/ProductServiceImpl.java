@@ -18,6 +18,7 @@ public class ProductServiceImpl implements  ProductService{
     @Override
     public Product create(Product product) {
         productRepository.create(product);
+        System.out.println("repo"+productRepository);
         return product;
     }
 
