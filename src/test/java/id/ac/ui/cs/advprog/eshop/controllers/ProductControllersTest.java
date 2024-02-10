@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -52,6 +53,13 @@ public class ProductControllersTest {
     public void listPageTest() throws Exception{
         mvc.perform(get("/product/list"))
                 .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Product' List")));
+    }
+    @Test
+    public void createProductPostTest() throws Exception{
+        Product product = new Product();
+        mvc.perform(post("/product/create"))
+                .andExpect(status().is3xxRedirection())
                 .andExpect(content().string(containsString("Product' List")));
     }
     public static String asJsonString(final Object obj) {
