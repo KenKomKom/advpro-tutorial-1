@@ -61,9 +61,6 @@ public class ProductController {
     public String productListPage(Model model){
         List<Product> allProducts = service.findAll();
         System.out.println(allProducts);
-        for (long i = 0; i <Long.MAX_VALUE ; i++) {
-
-        }
         model.addAttribute("products", allProducts);
         return "productlist";
     }
