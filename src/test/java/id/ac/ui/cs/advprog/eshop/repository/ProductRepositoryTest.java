@@ -151,7 +151,7 @@ public class ProductRepositoryTest {
             productRepository.getProduct("eb558e9f-1c39-460e-8860-71af6af63bd6");
         }catch (Exception e){
             // Jika ada error maka berhasil
-            // Tidak bisa catch InvalidKeyException karena never thrown entah gimana
+            // Tidak bisa catch InvalidKeyException karena never thrown entah kenapa
             System.out.println("product not found successfully");
         }
     }
