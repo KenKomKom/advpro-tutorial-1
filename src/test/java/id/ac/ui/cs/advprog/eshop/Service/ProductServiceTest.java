@@ -2,21 +2,62 @@ package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.ProductRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
-    @InjectMocks
+    @MockBean
     ProductRepository productRepository;
 
     @InjectMocks
     ProductServiceImpl service;
+
+    private ArrayList<Product> allProducts;
+
+    @BeforeEach
+    void setUp(){
+        allProducts = new ArrayList<>();
+        createAndSaveProduct("nama","id",1);
+    }
+
+    Product createAndSaveProduct(String name, String id, int quantity){
+        Product product = createProduct(name,id,quantity);
+        service.create(product);
+        allProducts.add(product);
+
+        return product;
+    }
+
+    @AfterEach
+    void deleteProduct(){
+        allProducts = null;
+    }
+
+    boolean editRepoMock(Product product){
+        for(Product datum : allProducts){
+            if (datum.getProductId().equals(product.getProductId())){
+                datum.setProductName(product.getProductName());
+                datum.setProductQuantity(product.getProductQuantity());
+                return true;
+            }
+        }
+        return false;
+    }
 
     Product createProduct(String name, String id, int quantity){
         Product product = new Product();
@@ -29,25 +70,19 @@ public class ProductServiceTest {
 
     @Test
     void testCreateProduct(){
-        Product product1 = createProduct("nama","id",1);
-        Product result = service.create(product1);
-        product1.setProductId("id"); // productRepo.create changes the id
+        createAndSaveProduct("nama","id",1);
+        when(productRepository.findAll()).thenReturn(allProducts.iterator());
+        List<Product> list = service.findAll();
 
-        assertEquals(product1.getProductId(), result.getProductId());
-        assertEquals(product1.getProductName(), result.getProductName());
-        assertEquals(product1.getProductQuantity(), result.getProductQuantity());
+        assertEquals("id", list.getFirst().getProductId());
+        assertEquals("nama", list.getFirst().getProductName());
+        assertEquals(1, list.getFirst().getProductQuantity());
     }
 
     @Test
     void testFindAllProduct(){
-        Product product1 = createProduct("nama","id",1);
-        service.create(product1);
-        product1.setProductId("id"); // productRepo.create changes the id
-
-        Product product2 = createProduct("nomu","uwu",2);
-        service.create(product2);
-        product2.setProductId("uwu");
-
+        createAndSaveProduct("nomu","uwu",2);
+        when(productRepository.findAll()).thenReturn(allProducts.iterator());
         List<Product> list = service.findAll();
 
         assertEquals("id", list.get(0).getProductId());
@@ -60,30 +95,29 @@ public class ProductServiceTest {
 
     @Test
     void testEditGetProduct(){
-        Product product1 = createProduct("nama","id",1);
-        service.create(product1);
-        product1.setProductId("id"); // productRepo.create changes the id
+        Product product2 = createAndSaveProduct("aa", "id2",20);
+        Product product3 = createProduct("nomu","id2",2); // Data to edit product2
 
-        Product product2 = createProduct("nomu","id",2);
-        boolean hasEdit = service.edit(product2);
-        Product resultEdit = service.getProduct(product1.getProductId());
+        when(productRepository.edit(product3)).thenReturn(editRepoMock(product3));
+        boolean hasEdit = service.edit(product3);
+        when(productRepository.getProduct(product2.getProductId())).thenReturn(product2);
+        Product resultEdit = service.getProduct(product2.getProductId());
 
         assertTrue(hasEdit);
-
-        assertEquals("id", resultEdit.getProductId());
+        assertEquals("id2", resultEdit.getProductId());
         assertEquals("nomu", resultEdit.getProductName());
         assertEquals(2, resultEdit.getProductQuantity());
     }
+
     @Test
     void testCreateDeleteProduct(){
-        Product product1 = createProduct("nama","id",1);
-        service.create(product1);
-        product1.setProductId("id"); // productRepo.create changes the id
-
+        Product product2 = createAndSaveProduct("aa", "id2",20);
+        when(productRepository.delete("id")).thenReturn(allProducts.remove(product2));
         boolean hasDelete = service.delete("id");
 
+        when(productRepository.findAll()).thenReturn(allProducts.iterator());
         List<Product> list = service.findAll();
         assertTrue(hasDelete);
-        assertEquals(0,list.size());
+        assertEquals(1,list.size());
     }
 }

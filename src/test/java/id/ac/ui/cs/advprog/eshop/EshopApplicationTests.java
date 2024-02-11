@@ -14,6 +14,7 @@ class EshopApplicationTests {
 	private ProductController controller;
 	@Test
 	void contextLoads() {
+		EshopApplication.main(new String[] {});
 		assertThat(controller).isNotNull();
 	}
 
