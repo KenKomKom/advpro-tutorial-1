@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.management.openmbean.InvalidKeyException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,7 +40,7 @@ public class ProductControllersTest {
     private ProductController controller;
 
 
-    private ArrayList<Product> allProducts;
+    private List<Product> allProducts;
 
     private  Product mockAddProductToRepository(Product product){
         allProducts.add(product);

@@ -27,7 +27,7 @@ public class ProductServiceTest {
     @InjectMocks
     ProductServiceImpl service;
 
-    private ArrayList<Product> allProducts;
+    private List<Product> allProducts;
 
     @BeforeEach
     void setUp(){
