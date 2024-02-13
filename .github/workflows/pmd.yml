@@ -4,6 +4,8 @@ on :
   push:
   pull_request:
 
+permissions: read-all
+
 jobs:
   test:
     name: Run tests
@@ -21,6 +23,7 @@ jobs:
           analyzeModifiedFilesOnly: 'false'
           format: 'text'
           failOnViolation: true
+
       - name: "Upload artifact"
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # v3.1.0
         with:
