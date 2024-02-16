@@ -1,18 +1,13 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.model.Car;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
-import id.ac.ui.cs.advprog.eshop.service.ProductServiceImpl;
+import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,10 +34,10 @@ public class ProductController {
         return "redirect:list";
     }
 
-    @RequestMapping(value="/product/edit/{id}", method = RequestMethod.GET)
+    @GetMapping(value="/product/edit/{id}")
     public String editProductPage(Model model, @PathVariable("id") String productId){
         try{
-            Product product = service.getProduct(productId);
+            Product product = service.findById(productId);
             model.addAttribute("product", product);
             return "editproduct";
         }catch (Exception e){
@@ -50,10 +45,10 @@ public class ProductController {
         }
     }
 
-    @PutMapping(value="/product/edit/{id}")
+    @PostMapping(value="/product/edit/{id}")
     public String editProductPost(@ModelAttribute("product") Product product, Model model, @PathVariable("id") String productId){
         product.setProductId(productId); // Reasoning: After posted by form, id becomes null
-        service.edit(product);
+        service.update(product);
         return "redirect:../list";
     }
 
@@ -64,9 +59,9 @@ public class ProductController {
         return "productlist";
     }
 
-    @GetMapping("/product/delete/{idToBeDelete}")
-    public String deleteProductPost(Model model, @PathVariable String idToBeDelete){
-        service.delete(idToBeDelete);
-        return "redirect:../list";
+    @PostMapping("/product/delete")
+    public String deleteProductPost(Model model, @RequestParam("idToBeDelete") String idToBeDelete){
+        service.deleteProductById(idToBeDelete);
+        return "redirect:list";
     }
 }

@@ -99,9 +99,9 @@ public class ProductServiceTest {
         Product product3 = createProduct("nomu","id2",2); // Data to edit product2
 
         when(productRepository.edit(product3)).thenReturn(editRepoMock(product3));
-        boolean hasEdit = service.edit(product3);
+        boolean hasEdit = service.update(product3);
         when(productRepository.getProduct(product2.getProductId())).thenReturn(product2);
-        Product resultEdit = service.getProduct(product2.getProductId());
+        Product resultEdit = service.findById(product2.getProductId());
 
         assertTrue(hasEdit);
         assertEquals("id2", resultEdit.getProductId());
@@ -113,7 +113,7 @@ public class ProductServiceTest {
     void testCreateDeleteProduct(){
         Product product2 = createAndSaveProduct("aa", "id2",20);
         when(productRepository.delete("id")).thenReturn(allProducts.remove(product2));
-        boolean hasDelete = service.delete("id");
+        boolean hasDelete = service.deleteProductById("id");
 
         when(productRepository.findAll()).thenReturn(allProducts.iterator());
         List<Product> list = service.findAll();

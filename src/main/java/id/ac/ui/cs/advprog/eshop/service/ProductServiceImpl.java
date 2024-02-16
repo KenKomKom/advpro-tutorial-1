@@ -31,16 +31,16 @@ public class ProductServiceImpl implements  ProductService{
     }
 
     @Override
-    public boolean edit(Product product){
+    public boolean update(Product product){
         return productRepository.edit(product);
     }
 
     @Override
-    public Product getProduct(String productId) throws InvalidKeyException {
+    public Product findById(String productId) throws InvalidKeyException {
         return productRepository.getProduct(productId);
     }
     @Override
-    public boolean delete(String productId) {
+    public boolean deleteProductById(String productId) {
         return productRepository.delete(productId);
     }
 }

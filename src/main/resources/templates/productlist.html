@@ -23,7 +23,12 @@
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productQuantity}"></td>
             <td><a th:href="@{/product/edit/{id}(id=${product.productId})}" class="btn btn-primary btn-sm mb-3">Edit Product</a></td>
-            <td><a th:href="@{/product/delete/{idToBeDelete}(idToBeDelete=${product.productId})}" class="btn btn-primary btn-sm mb-3">Delete Product</a></td>
+<!--            <td><a th:href="@{/product/delete/{idToBeDelete}(idToBeDelete=${product.productId})}" class="btn btn-primary btn-sm mb-3">Delete Product</a></td>-->
+            <td><form action="/product/delete" method="post">
+                    <input type="hidden" id="idToBeDelete" name="idToBeDelete" th:value="${product.productId}">
+                    <button type="submit" name="delete" th:value="${product.productId}">Delete</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
