@@ -26,32 +26,32 @@ public class CarController extends ProductController {
     @PostMapping("/createCar")
     public String createCarPost(@ModelAttribute("product") Car car, Model model){
         carService.create(car);
-        return "redirect:listCar";
+        return "redirect:listcar";
     }
 
     @PostMapping("/listCar")
     public String carListPage(Model model){
         List<Car> allCars = carService.findAll();
         model.addAttribute("car", allCars);
-        return "carList";
+        return "carlist";
     }
 
     @GetMapping(value="/editCar/edit/{carId}")
     public String editProductPage(Model model, @PathVariable("id") String productId){
         Car car = carService.findById(productId);
         model.addAttribute("car", car);
-        return "editCar";
+        return "editcar";
     }
 
     @GetMapping("/editCar")
     public String editProductPost(@ModelAttribute("product") Car car, Model model, @PathVariable("id") String productId){
         System.out.println(car.getCarId());
         carService.update(car.getCarId(), car);
-        return "redirect:listCar";
+        return "redirect:listcar";
     }
     @PostMapping("/deleteCar")
     public String deleteCar(Model model, @RequestParam("carId") String carId){
         carService.deleteCarById(carId);
-        return "redirect:listCar";
+        return "redirect:listcar";
     }
 }
