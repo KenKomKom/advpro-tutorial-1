@@ -117,7 +117,7 @@ public class ProductControllersTest {
         when(service.create(product)).thenReturn(mockAddProductToRepository(product));
         mvc.perform(post("/product/create").flashAttr("product",product))
                 .andExpect(status().is3xxRedirection());
-        when(service.getProduct(product.getProductId())).thenReturn(product);
+        when(service.findById(product.getProductId())).thenReturn(product);
         mvc.perform(get("/product/edit/"+product.getProductId()))
                 .andExpect(status().isOk()).andExpect(content().string(containsString("Edit Product")));
     }
@@ -134,7 +134,7 @@ public class ProductControllersTest {
         Product product2 = new Product();
         product2.setProductId(product.getProductId());
         product2.setProductName("adi");
-        when(service.edit(product2)).thenReturn(mockEditProductToRepository(product2));
+        when(service.update(product2)).thenReturn(mockEditProductToRepository(product2));
         mvc.perform(put("/product/edit/"+product.getProductId()).flashAttr("product",product2))
                 .andExpect(status().is3xxRedirection());
 
@@ -150,7 +150,7 @@ public class ProductControllersTest {
         Product product2 = new Product();
         product2.setProductId("some ID");
         product2.setProductName("adi");
-        when(service.getProduct("some ID")).thenThrow(new InvalidKeyException());
+        when(service.findById("some ID")).thenThrow(new InvalidKeyException());
         mvc.perform(get("/product/edit/"+product2.getProductId()).flashAttr("product",product2))
                 .andExpect(status().is3xxRedirection());
 
@@ -171,7 +171,7 @@ public class ProductControllersTest {
                 .andExpect(content().string(containsString("Product' List")))
                 .andExpect(content().string(containsString("bambang")));
 
-        when(service.delete(product.getProductId())).thenReturn(allProducts.remove(product));
+        when(service.deleteProductById(product.getProductId())).thenReturn(allProducts.remove(product));
         mvc.perform(get("/product/delete/"+product.getProductId()))
                 .andExpect(status().is3xxRedirection());
 

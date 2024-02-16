@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductService {
     Product create(Product product);
     List<Product> findAll();
-    boolean edit(Product product);
-    Product getProduct(String productId) throws InvalidKeyException;
-    boolean delete(String productId);
+    boolean update(Product product);
+    Product findById(String productId) throws InvalidKeyException;
+    boolean deleteProductById(String productId);
 }
