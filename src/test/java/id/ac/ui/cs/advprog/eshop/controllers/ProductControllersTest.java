@@ -2,6 +2,8 @@ package id.ac.ui.cs.advprog.eshop.controllers;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.controller.ProductController;
+import id.ac.ui.cs.advprog.eshop.service.CarService;
+import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
 import id.ac.ui.cs.advprog.eshop.service.ProductServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +37,8 @@ public class ProductControllersTest {
 
     @MockBean
     private ProductServiceImpl service;
+    @MockBean
+    private CarServiceImpl carService;
 
     @InjectMocks
     private ProductController controller;
@@ -123,7 +127,7 @@ public class ProductControllersTest {
     }
 
     @Test
-    public void editProductPutTest() throws Exception{
+    public void editProductPostTest() throws Exception{
 
         Product product = createAndSaveProduct();
 
@@ -135,7 +139,7 @@ public class ProductControllersTest {
         product2.setProductId(product.getProductId());
         product2.setProductName("adi");
         when(service.update(product2)).thenReturn(mockEditProductToRepository(product2));
-        mvc.perform(put("/product/edit/"+product.getProductId()).flashAttr("product",product2))
+        mvc.perform(post("/product/edit/"+product.getProductId()).flashAttr("product",product2))
                 .andExpect(status().is3xxRedirection());
 
         when(service.findAll()).thenReturn(allProducts);
@@ -172,7 +176,7 @@ public class ProductControllersTest {
                 .andExpect(content().string(containsString("bambang")));
 
         when(service.deleteProductById(product.getProductId())).thenReturn(allProducts.remove(product));
-        mvc.perform(get("/product/delete/"+product.getProductId()))
+        mvc.perform(post("/product/delete").param("idToBeDelete",product.getProductId()))
                 .andExpect(status().is3xxRedirection());
 
         assertEquals(0, allProducts.size());
