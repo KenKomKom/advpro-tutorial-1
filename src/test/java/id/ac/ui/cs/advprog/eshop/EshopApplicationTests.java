@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop;
 
+import id.ac.ui.cs.advprog.eshop.controller.CarController;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,11 +13,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EshopApplicationTests {
 
 	@Resource(name="productController")
-	private ProductController controller;
+	private ProductController productController;
+	@Resource(name="carController")
+	private CarController carController;
 	@Test
 	void contextLoads() {
 		EshopApplication.main(new String[] {});
-		assertThat(controller).isNotNull();
+		assertThat(productController).isNotNull();
+		assertThat(carController).isNotNull();
 	}
 
 }
