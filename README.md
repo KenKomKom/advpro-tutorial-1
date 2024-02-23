@@ -55,7 +55,7 @@
 1. Prinsip yang saya aplikasikan ada,
 - Single Responsibility Principle, Saya memisahkan method home page saya dari yang sebelumnya berada pada ProductController ke class HomeController karena memiliki fungsi yang berbeda, selain itu, saya juga menghilangkan extends ProductController pada CarController karena menurut saya kedua class tersebut memiliki fungsi berbeda sehingga CarController seharusnya tidak bisa menggunakan method di ProductController.
 - Dependacy Inversion dilakukan pada file CarController dengan cara mengganti tipe data CarServiceImpl menjadi CarService untuk menghindari coupling antara kelas CarController dan juga class CarServiceImpl dan juga agar perubaha yang terjadi di CarServiceImpl tidak merusak CarController.
-
+- Interface segregation, karena dibuat CarService dan juga ProductService dipisahkan karena service yang mengimplementasikannya hanya memerlukan salah satu diantaranya dan bukan keduanya. Hal ini membuat tiap class yang implements servicenya mengimplementnya secara tepat dan bukan hanya return null atau throw unimplemented exception.
 2. Dengan mengimplementasikan SOLID, kita meningkatkan manageability  code yang kita buat. 
 - Kita lebih mudah membuat unit untuk menguji kode misalkan,
 
