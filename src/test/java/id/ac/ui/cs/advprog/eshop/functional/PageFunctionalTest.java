@@ -35,13 +35,14 @@ public class PageFunctionalTest {
 
     void deleteAll(ChromeDriver driver, int productsMade){
         for (int i=0; i<productsMade; i++){
-            List<WebElement> links = driver.findElements(By.tagName("a"));
-            WebElement linkDelete = links.get(2);
+            List<WebElement> links = driver.findElements(By.tagName("button"));
+            WebElement linkDelete = links.get(0);
             linkDelete.click();
         }
     }
 
     void fillNameQuantity(ChromeDriver driver, String name, int quantity){
+        driver.findElement(By.id("nameInput")).clear();
         driver.findElement(By.id("nameInput")).sendKeys(name);
         driver.findElement(By.id("quantityInput")).clear();
         driver.findElement(By.id("quantityInput")).sendKeys(String.valueOf(quantity));
@@ -110,7 +111,6 @@ public class PageFunctionalTest {
 
         createProduct(driver, name, quantity);
         assertTrue(checkForFirstProductInList(driver, name, quantity));
-
         List<WebElement> links = driver.findElements(By.tagName("a"));
         WebElement linkEdit = links.get(1);
         linkEdit.click();
@@ -130,8 +130,8 @@ public class PageFunctionalTest {
         createProduct(driver, name, quantity);
         assertTrue(checkForFirstProductInList(driver, name, quantity));
 
-        List<WebElement> links = driver.findElements(By.tagName("a"));
-        WebElement linkDelete = links.get(2);
+        List<WebElement> links = driver.findElements(By.tagName("button"));
+        WebElement linkDelete = links.get(0);
         linkDelete.click();
 
         List<WebElement> productInfo = driver.findElements(By.tagName("td"));

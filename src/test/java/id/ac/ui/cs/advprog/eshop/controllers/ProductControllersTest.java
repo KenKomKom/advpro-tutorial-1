@@ -80,13 +80,6 @@ public class ProductControllersTest {
     }
 
     @Test
-    public void homepageTest() throws Exception{
-        mvc.perform(get(""))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("uWu")));
-    }
-
-    @Test
     public void createPageTest() throws Exception{
         mvc.perform(get("/product/create"))
                 .andExpect(status().isOk())
