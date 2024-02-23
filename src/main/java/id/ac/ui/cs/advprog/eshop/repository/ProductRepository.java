@@ -30,8 +30,8 @@ public class ProductRepository {
             return false;
         } else{
             Product existingProduct = productData.get(index);
-            existingProduct.setProductQuantity(product.getProductQuantity());
-            existingProduct.setProductName(product.getProductName());
+
+            existingProduct.update(product);
             return true;
         }
     }
