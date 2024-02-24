@@ -1,3 +1,6 @@
+Link ke app:
+https://advpro-tutorial-kenkomkom.koyeb.app/
+
 ## REFLECTION1
 
 1. Menurut saya, prinsip clean code yang telah saya laksanakan adalah sebagai berikut :
