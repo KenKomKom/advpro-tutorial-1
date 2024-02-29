@@ -1,7 +1,5 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import id.ac.ui.cs.advprog.eshop.model.Order;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,18 +36,18 @@ public class OrderTest {
     }
 
     @Test
-    void testCreateOrderDefault(){
+    void testCreateOrderDefaultStatus(){
         Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b", this.products, 1708560000L, "Safira Sudarajat");
 
         assertSame(this.products, order.getProducts());
-        assertEquals(2, order.getProducts());
+        assertEquals(2, order.getProducts().size());
         assertEquals("Sampo Cap Bambang", order.getProducts().get(0).getProductName());
         assertEquals("Sampo Cap Usep", order.getProducts().get(1).getProductName());
 
-        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", order.getId());
         assertEquals(1708560000L, order.getOrderTime());
         assertEquals("Safira Sudarajat", order.getAuthor());
         assertEquals("WAITING_PAYMENT", order.getStatus());
+        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", order.getId());
     }
 
     @Test
