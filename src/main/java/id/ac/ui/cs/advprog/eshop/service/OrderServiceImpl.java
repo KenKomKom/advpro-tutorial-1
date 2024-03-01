@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class OrderServiceImpl {
+public class OrderServiceImpl implements OrderService{
     @Autowired
     private OrderRepository orderRepository;
-    Order createOrder(Order order){
+    public Order createOrder(Order order){
         if (orderRepository.findById(order.getId())==null){
             orderRepository.save(order);
             return order;
         }
         return null;
     }
-    Order updateStatus(String orderId, String status){
+    public Order updateStatus(String orderId, String status){
         Order order = orderRepository.findById(orderId);
         if (order != null) {
             Order newOrder = new Order(order.getId(), order.getProducts(), order.getOrderTime(), order.getAuthor(), status);
@@ -27,10 +27,10 @@ public class OrderServiceImpl {
             throw new NoSuchElementException();
         }
     }
-    Order findById(String orderId){
+    public Order findById(String orderId){
         return orderRepository.findById(orderId);
     }
-    List<Order> findAllByAuthor(String author){
+    public List<Order> findAllByAuthor(String author){
         return orderRepository.findAllByAuthor(author);
     }
 }
