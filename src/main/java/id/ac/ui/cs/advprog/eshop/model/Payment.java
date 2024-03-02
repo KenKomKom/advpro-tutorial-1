@@ -28,8 +28,12 @@ public class Payment {
         setPaymentData(paymentData);
     }
 
-    private void setStatus(String status){
-        this.status=status;
+    public void setStatus(String status){
+        if(PaymentStatus.contains(status)){
+            this.status=status;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
     private void setPaymentData(Map<String, String>paymentData){
