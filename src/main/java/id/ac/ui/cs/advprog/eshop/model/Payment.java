@@ -24,13 +24,8 @@ public class Payment {
         this.id = UUID.randomUUID().toString();
         this.method = method;
         this.order = order;
-        try{
-            setPaymentData(paymentData);
-            setStatus(PaymentStatus.SUCCESS.getValue());
-        }catch (IllegalArgumentException e){
-            setStatus(PaymentStatus.REJECTED.getValue());
-            throw new IllegalArgumentException();
-        }
+        this.status=PaymentStatus.WAITING_PAYMENT.getValue();
+        setPaymentData(paymentData);
     }
 
     private void setStatus(String status){
