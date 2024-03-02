@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.doReturn;
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
     @InjectMocks
-    PaymentService paymentService;
+    PaymentServiceImpl paymentService;
     @Mock
     PaymentRepository paymentRepository;
     List<Order> orders;
@@ -87,8 +88,10 @@ public class PaymentServiceTest {
         assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(),payment1.getStatus());
         paymentService.setStatus(payment1, PaymentStatus.SUCCESS.getValue());
         assertEquals(PaymentStatus.SUCCESS.getValue(),payment1.getStatus());
+        assertEquals(OrderStatus.SUCCESS.getValue(), payment1.getOrder().getStatus());
         paymentService.setStatus(payment1, PaymentStatus.REJECTED.getValue());
         assertEquals(PaymentStatus.REJECTED.getValue(),payment1.getStatus());
+        assertEquals(OrderStatus.FAILED.getValue(), payment1.getOrder().getStatus());
     }
 
     @Test
