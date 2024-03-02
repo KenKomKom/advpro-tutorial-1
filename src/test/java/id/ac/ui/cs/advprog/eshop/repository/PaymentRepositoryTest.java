@@ -52,8 +52,11 @@ public class PaymentRepositoryTest {
                 "VOUCHER", paymentDataVoucher);
         payments.add(paymentV1);
 
-        Payment paymentB1 = new PaymentBank("bbbbbbbb-cccc-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
-                "VOUCHER", paymentDataVoucher);
+        Map<String, String> paymentDataBank = new HashMap<>();
+        paymentDataBank.put("bankName", "a");
+        paymentDataBank.put("referenceCode","0");
+        Payment paymentB1 = new PaymentBank("bbbbbbbb-dddd-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
+                "BANK", paymentDataBank);
         payments.add(paymentB1);
     }
 
@@ -121,6 +124,6 @@ public class PaymentRepositoryTest {
             paymentRepository.save(payment);
         }
         List<Payment> result = paymentRepository.getAllPayments();
-        assertEquals(3, result.size());
+        assertEquals(4, result.size());
     }
 }

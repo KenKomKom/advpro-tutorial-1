@@ -23,8 +23,12 @@ public class PaymentServiceImpl implements PaymentService{
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
         Payment payment;
         if (method.equals(PaymentMethod.VOUCHER.getValue())){
-                payment = createPaymentVoucher(order, method, paymentData);
-        }else{
+            payment = createPaymentVoucher(order, method, paymentData);
+        }
+        else if (method.equals(PaymentMethod.BANK.getValue())){
+            payment = createPaymentBank(order, method, paymentData);
+        }
+        else{
             payment = new Payment(order, method, paymentData);
         }
         return paymentRepository.save(payment);
@@ -53,5 +57,7 @@ public class PaymentServiceImpl implements PaymentService{
     public Payment createPaymentVoucher(Order order, String method, Map<String, String>paymentData){
         return new PaymentVoucher(order,method,paymentData);
     }
-
+    public Payment createPaymentBank(Order order, String method, Map<String, String>paymentData){
+        return new PaymentBank(order,method,paymentData);
+    }
 }
