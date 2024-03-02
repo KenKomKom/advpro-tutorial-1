@@ -2,10 +2,7 @@ package id.ac.ui.cs.advprog.eshop.repository;
 
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
-import id.ac.ui.cs.advprog.eshop.model.Order;
-import id.ac.ui.cs.advprog.eshop.model.Payment;
-import id.ac.ui.cs.advprog.eshop.model.PaymentVoucher;
-import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.constructor.DuplicateKeyException;
@@ -54,6 +51,10 @@ public class PaymentRepositoryTest {
         Payment paymentV1 = new PaymentVoucher("bbbbbbbb-cccc-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
                 "VOUCHER", paymentDataVoucher);
         payments.add(paymentV1);
+
+        Payment paymentB1 = new PaymentBank("bbbbbbbb-cccc-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
+                "VOUCHER", paymentDataVoucher);
+        payments.add(paymentB1);
     }
 
     @Test
