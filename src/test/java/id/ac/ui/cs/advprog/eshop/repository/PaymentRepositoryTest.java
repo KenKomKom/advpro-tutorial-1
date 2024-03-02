@@ -4,6 +4,7 @@ import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.PaymentVoucher;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,17 +41,19 @@ public class PaymentRepositoryTest {
                 1708560000L, "Safira Sudarajat");
         orders.add(order1);
 
-        Map<String, String> paymentDataVoucher = new HashMap<>();
-        paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
         Payment payment1 = new Payment("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",orders.get(0),
-                "VOUCHER", paymentDataVoucher);
-        Map<String, String> paymentDataBank = new  HashMap<>();
-        paymentDataVoucher.put("bankName", "a");
-        paymentDataVoucher.put("referenceCode", "0");
+                "", null);
         Payment payment2 = new Payment("bbbbbbbb-bbbb-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
-                "VOUCHER", paymentDataVoucher);
+                "", null);
         payments.add(payment1);
         payments.add(payment2);
+
+
+        Map<String, String> paymentDataVoucher = new HashMap<>();
+        paymentDataVoucher.put("voucherCode", "ESHOP00000000AAA");
+        Payment paymentV1 = new PaymentVoucher("bbbbbbbb-cccc-bbbb-bbbb-aaaaaaaaaaaa",orders.get(0),
+                "VOUCHER", paymentDataVoucher);
+        payments.add(paymentV1);
     }
 
     @Test
@@ -64,7 +67,21 @@ public class PaymentRepositoryTest {
         assertEquals(payment.getMethod(), findResult.getMethod());
         assertSame(payment.getPaymentData(), findResult.getPaymentData());
         assertEquals(payment.getStatus(), findResult.getStatus());
-        assertEquals(PaymentStatus.SUCCESS.getValue(), payment.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
+    }
+
+    @Test
+    void testAddPaymentVoucherSuccess(){
+        Payment payment = payments.get(2);
+        Payment result = paymentRepository.save(payment);
+
+        Payment findResult = paymentRepository.findById(payments.get(2).getId());
+        assertEquals(payment.getId(), result.getId());
+        assertEquals(payment.getId(), findResult.getId());
+        assertEquals(payment.getMethod(), findResult.getMethod());
+        assertSame(payment.getPaymentData(), findResult.getPaymentData());
+        assertEquals(payment.getStatus(), findResult.getStatus());
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(), payment.getStatus());
     }
 
     @Test
@@ -103,6 +120,6 @@ public class PaymentRepositoryTest {
             paymentRepository.save(payment);
         }
         List<Payment> result = paymentRepository.getAllPayments();
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
     }
 }

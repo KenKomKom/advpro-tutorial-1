@@ -3,15 +3,14 @@ package id.ac.ui.cs.advprog.eshop.service;
 import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
-import id.ac.ui.cs.advprog.eshop.model.Order;
-import id.ac.ui.cs.advprog.eshop.model.Payment;
-import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.model.*;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -21,10 +20,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentServiceTest {
+    @Spy
     @InjectMocks
     PaymentServiceImpl paymentService;
     @Mock
@@ -51,13 +51,13 @@ public class PaymentServiceTest {
         payments = new ArrayList<>();
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode","ESHOP00000000AAA");
-        Payment payment1 = new Payment( order,
+        Payment payment1 = new PaymentVoucher( order,
                 "VOUCHER", paymentData );
         payments.add(payment1);
         paymentData = new HashMap<>();
         paymentData.put("bankName","a");
         paymentData.put("referenceCode","0");
-        Payment payment2 = new Payment(order, "BANK", paymentData);
+        Payment payment2 = new PaymentBank(order, "BANK", paymentData);
         payments.add(payment2);
     }
 
@@ -84,13 +84,14 @@ public class PaymentServiceTest {
         assertEquals(payment2.getId(),findResult.getId() );
         assertEquals(payment2.getMethod(), findResult.getMethod() );
         assertEquals(payment2.getStatus(), findResult.getStatus() );
+        verify(paymentService, times(1)).createPaymentVoucher(any(Order.class), any(String.class), any(Map.class));
     }
 
     @Test
     void testSetStatusSuccessful(){
         Map<String, String> paymentData = new HashMap<>();
         paymentData.put("voucherCode","ESHOP00000000AAA");
-        Payment payment1 = new Payment(orders.get(0), "VOUCHER", paymentData);
+        Payment payment1 = new Payment(orders.get(0), "", paymentData);
 
         assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(),payment1.getStatus());
         paymentService.setStatus(payment1, PaymentStatus.SUCCESS.getValue());
