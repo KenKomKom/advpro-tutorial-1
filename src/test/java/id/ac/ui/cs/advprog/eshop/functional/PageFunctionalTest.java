@@ -112,7 +112,7 @@ public class PageFunctionalTest {
         createProduct(driver, name, quantity);
         assertTrue(checkForFirstProductInList(driver, name, quantity));
         List<WebElement> links = driver.findElements(By.tagName("a"));
-        WebElement linkEdit = links.get(1);
+        WebElement linkEdit = links.get(2);
         linkEdit.click();
 
         fillNameQuantity(driver, name2, quantity2);
