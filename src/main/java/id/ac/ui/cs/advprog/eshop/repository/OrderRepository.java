@@ -3,7 +3,9 @@ package id.ac.ui.cs.advprog.eshop.repository;
 import java.util.ArrayList;
 import java.util.List;
 import id.ac.ui.cs.advprog.eshop.model.Order;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrderRepository {
     private List<Order> orderData = new ArrayList();
     public Order save(Order order){

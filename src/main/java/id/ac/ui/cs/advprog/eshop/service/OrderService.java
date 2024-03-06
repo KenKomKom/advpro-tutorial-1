@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface OrderService {
     Order createOrder(Order order);
     Order updateStatus(String orderId, String status);
