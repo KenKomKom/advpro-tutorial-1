@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
-@Service
 public interface PaymentService {
     Payment addPayment(Order order, String method, Map<String, String> paymentData);
     List<Payment> getAllPayment();

@@ -9,11 +9,12 @@ import id.ac.ui.cs.advprog.eshop.model.PaymentBank;
 import id.ac.ui.cs.advprog.eshop.model.PaymentVoucher;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-
+@Service
 public class PaymentServiceImpl implements PaymentService{
 
     @Autowired
