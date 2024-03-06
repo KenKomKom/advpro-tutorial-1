@@ -84,4 +84,22 @@ public class OrderTest {
         });
     }
 
+    @Test
+    void testOrderBuilder(){
+
+        Order order = Order.builder()
+                .author("a")
+                .orderTime(100l)
+                .status("SUCCESS")
+                .id("id")
+                .products(products)
+                .build();
+        assertEquals("a", order.getAuthor());
+        assertEquals(100l, order.getOrderTime());
+        assertEquals("SUCCESS", order.getStatus());
+        assertEquals("id", order.getId());
+        assertSame(products, order.getProducts());
+        assertEquals("Order.OrderBuilder(id=null, products=null, orderTime=null, author=null, status=null)", Order.builder().toString());
+    }
+
 }

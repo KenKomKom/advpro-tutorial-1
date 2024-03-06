@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
 import id.ac.ui.cs.advprog.eshop.model.OrderDTO;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.model.PaymentDTO;
@@ -33,8 +34,13 @@ public class PaymentController {
         Payment temp = paymentService.getPayment(paymentId);
         model.addAttribute("payment", temp);
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setReferenceCode(temp.getPaymentData().get("referenceCode"));
-        paymentDTO.setReferenceCode(temp.getPaymentData().get("bankName"));
+        if (temp.getMethod().equals(PaymentMethod.BANK.getValue())){
+            paymentDTO.setReferenceCode(temp.getPaymentData().get("referenceCode"));
+            paymentDTO.setReferenceCode(temp.getPaymentData().get("bankName"));
+        }
+        else if(temp.getMethod().equals(PaymentMethod.VOUCHER.getValue())){
+            paymentDTO.setVoucherCode(temp.getPaymentData().get("voucherCode"));
+        }
         model.addAttribute("paymentinfo", paymentDTO);
         return "paymentdetail";
     }
@@ -49,8 +55,13 @@ public class PaymentController {
         model.addAttribute("payment", temp);
 
         PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setReferenceCode(temp.getPaymentData().get("referenceCode"));
-        paymentDTO.setReferenceCode(temp.getPaymentData().get("bankName"));
+        if (temp.getMethod().equals(PaymentMethod.BANK.getValue())){
+            paymentDTO.setReferenceCode(temp.getPaymentData().get("referenceCode"));
+            paymentDTO.setReferenceCode(temp.getPaymentData().get("bankName"));
+        }
+        else if(temp.getMethod().equals(PaymentMethod.VOUCHER.getValue())){
+            paymentDTO.setVoucherCode(temp.getPaymentData().get("voucherCode"));
+        }
         model.addAttribute("paymentinfo", paymentDTO);
 
         model.addAttribute("admin", true);

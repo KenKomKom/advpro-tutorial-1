@@ -59,6 +59,9 @@ public class PaymentServiceTest {
         paymentData.put("referenceCode","0");
         Payment payment2 = new PaymentBank(order, "BANK", paymentData);
         payments.add(payment2);
+
+        Payment payment3 = new Payment(order, "", null);
+        payments.add(payment3);
     }
 
     @Test
@@ -70,6 +73,10 @@ public class PaymentServiceTest {
         Payment payment2 = payments.get(1);
         doReturn(payment2).when(paymentRepository).save(any(Payment.class));
         payment2 = paymentService.addPayment(payment2.getOrder(), "BANK", payment2.getPaymentData());
+
+        Payment payment3 =payments.get(2);
+        doReturn(payment3).when(paymentRepository).save(any(Payment.class));
+        payment3 = paymentService.addPayment(payment3.getOrder(), "", payment3.getPaymentData());
 
         doReturn(payment1).when(paymentRepository).findById(payment1.getId());
         Payment findResult = paymentService.getPayment(payment1.getId());
@@ -84,6 +91,13 @@ public class PaymentServiceTest {
         assertEquals(payment2.getId(),findResult.getId() );
         assertEquals(payment2.getMethod(), findResult.getMethod() );
         assertEquals(payment2.getStatus(), findResult.getStatus() );
+
+        doReturn(payment3).when(paymentRepository).findById(payment3.getId());
+        findResult = paymentService.getPayment(payment3.getId());
+
+        assertEquals(payment3.getId(),findResult.getId() );
+        assertEquals(payment3.getMethod(), findResult.getMethod() );
+        assertEquals(payment3.getStatus(), findResult.getStatus() );
         verify(paymentService, times(1)).createPaymentVoucher(any(Order.class), any(String.class), any(Map.class));
         verify(paymentService, times(1)).createPaymentBank(any(Order.class), any(String.class), any(Map.class));
     }
@@ -98,7 +112,15 @@ public class PaymentServiceTest {
         paymentService.setStatus(payment1, PaymentStatus.SUCCESS.getValue());
         assertEquals(PaymentStatus.SUCCESS.getValue(),payment1.getStatus());
         assertEquals(OrderStatus.SUCCESS.getValue(), payment1.getOrder().getStatus());
+    }
 
+    @Test
+    void testSetStatusRejected(){
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("voucherCode","ESHOP00000000AAA");
+        Payment payment1 = new PaymentVoucher(orders.get(0), "", paymentData);
+
+        assertEquals(PaymentStatus.WAITING_PAYMENT.getValue(),payment1.getStatus());
         paymentService.setStatus(payment1, PaymentStatus.REJECTED.getValue());
         assertEquals(PaymentStatus.REJECTED.getValue(),payment1.getStatus());
         assertEquals(OrderStatus.FAILED.getValue(), payment1.getOrder().getStatus());
