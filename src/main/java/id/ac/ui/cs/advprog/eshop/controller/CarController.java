@@ -39,8 +39,11 @@ public class CarController {
     @GetMapping(value="/editCar/{carId}")
     public String editProductPage(Model model, @PathVariable("carId") String productId){
         Car car = carService.findById(productId);
-        model.addAttribute("car", car);
-        return "editcar";
+        if (car!=null){
+            model.addAttribute("car", car);
+            return "editcar";
+        }
+        return "redirect:../listCar";
     }
 
     @PostMapping("/editCar")
